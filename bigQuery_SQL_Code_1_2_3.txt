@@ -1,0 +1,20 @@
+1. 
+select sum(visits) from (
+SELECT count(visitNumber) visits FROM `bigquery-public-data.google_analytics_sample.ga_sessions_201706*`
+union all
+SELECT count(visitNumber) visits FROM `bigquery-public-data.google_analytics_sample.ga_sessions_201707*`
+);
+
+2. For the last two days of data, 
+how many sessions were there per day?
+
+SELECT "20170801", count(visitNumber) visits FROM `bigquery-public-data.google_analytics_sample.ga_sessions_20170801` 
+union all
+SELECT "20170731", count(visitNumber) visits FROM `bigquery-public-data.google_analytics_sample.ga_sessions_20170731`;
+
+
+3) How many different sources had transactions during 2017?
+
+SELECT count(distinct trafficSource.source) sources_had_transactions FROM `bigquery-public-data.google_analytics_sample.ga_sessions_2017*` 
+where totals.transactions is not null
+LIMIT 10;
